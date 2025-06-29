@@ -10,7 +10,7 @@ function PostList() {
         const response = await fetch('https://jsonplaceholder.typicode.com/posts');
 
         if (!response.ok) {
-          throw new Error('Failed to fetch posts. Please try again later.');
+          throw new Error('Data fetching failed');
         }
 
         const data = await response.json();
@@ -24,18 +24,24 @@ function PostList() {
   }, []);
 
   if (error) {
-    return <h2 style={{ color: 'red' }}>Error: {error}</h2>;
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h2 style={{ color: 'black' }}>{error}</h2>
+        <img src="/error-message.png" alt="Error visual" style={{ maxWidth: '100%' }} />
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1>Blog Posts</h1>
-      {posts.map(post => (
-        <div key={post.id} style={{ marginBottom: '1rem' }}>
-          <h3>{post.title}</h3>
+    <div style={{ textAlign: 'center' }}>
+      <h1>Posts</h1>
+      {posts.slice(0, 10).map(post => (
+        <div key={post.id} style={{ marginBottom: '2rem' }}>
+          <h2>{post.id}. {post.title}</h2>
           <p>{post.body}</p>
         </div>
       ))}
+      <img src="/blog-posts.png" alt="Blog visual" style={{ maxWidth: '100%' }} />
     </div>
   );
 }
